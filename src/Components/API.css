@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+    justify-content: center; 
+    /* flex-direction: row; */
+    align-items: center;
+    padding: 0;
+    flex-wrap: wrap;
+    gap: 2rem;
+    /* height: 250px; */
+} 
+
+.each-container {
+    border: 2px solid black;
+    padding: 0.5rem;
+    height: 370px;
+    align-items: center;
+    width: 300px;
+}
+
+h1 {
+    color: rgb(221, 139, 7);
+    padding: 2rem;
+    font-weight: 700;
+    font-size: 3rem;
+    text-shadow: 2px 2px 2px black;
+}
+
+.image {
+    height: 250px;
+    width: auto;
+}
