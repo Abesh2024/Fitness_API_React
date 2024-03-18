@@ -3,7 +3,20 @@ import './API.css';
 
 function APIcall () {
 
-    const [dataShow, setDatashow] = useState([]);
+    const [dataShow, setDatashow] = useState([]);  
+    const [newData, setNewdata] = useState([]);
+
+    function filterData(move) {
+        let data = dataShow.filter((item) => {
+          if (item.name.toLowerCase().includes(move.toLowerCase())) {
+            return true;
+          }
+          if(item.target.toLowerCase().includes(move.toLowerCase())){
+            return true;
+          }
+        });
+        setNewdata(data);
+      }
 
     const getData = async ()=>{
         const options = {
@@ -14,9 +27,11 @@ function APIcall () {
             }
         };
 
-        let response = await fetch(`https://exercisedb.p.rapidapi.com/exercises?limit=20`, options)
-        setDatashow(await response.json())
-        console.log(dataShow);
+        let response = await fetch(`https://exercisedb.p.rapidapi.com/exercises?limit=50`, options)
+        let data = await response.json();
+        setDatashow(data)
+        setNewdata(data)
+        // console.log(dataShow);
     }
 
     useEffect(()=>{
@@ -25,10 +40,17 @@ function APIcall () {
 
     return ( <div>
         <h1>Your Fitness, Our Amenities, Your Effort & Gain, Our Achievement</h1>
-        
+        <input className = "input-box"
+        type="text"
+        name="search"
+        placeholder="search for the move you like"
+        onChange={(e) => {
+            filterData(e.target.value);
+          }}
+        /> <button>Search</button>
         <div className = "container">
         {
-            dataShow.map((e)=>{
+            newData.map((e)=>{
                 return ( 
                     <div key={e.index} className="each-container">
                         {/* {console.log("__  ",e)} */}
@@ -36,7 +58,6 @@ function APIcall () {
                     <img src={e.gifUrl} alt={e.bodyPart} className = "image"/>
                     <p>{e.target}</p>
                     </div>
-                
                 )
             })
         }
